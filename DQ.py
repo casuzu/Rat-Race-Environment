@@ -4,7 +4,8 @@ def disqualification_check(self):
         tires_coordinates = car.get_tires_coordinates()
         for tire in tires_coordinates:
             x, y = tire
-            if x == 0 or x == 1 or y == 0 or y == 1:
-                # If any tire is at the boundary, disqualify the car and reset to the start line
-                car.reset_to_start()
-                print(f"{car.racer_name} disqualified! Resetting to the start line.")
+            if self.track_mat[x][y] == 0:
+                return True #Car is off track.
+    return False # All cars are on the track.
+    #Add code for crossing the finish line.
+           
