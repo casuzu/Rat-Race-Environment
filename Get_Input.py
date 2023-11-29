@@ -1,11 +1,9 @@
-def get_input_distances(self):
-    distances = []
+def get_input_distances(self, car):
+    distances = [] # Distance of the car's eight radars to the boundary
+    x, y = car.front_bumper_pos
+    distances.append(self.__get_distance_to_boundary(x, y))
 
-    for car in self.__carlist:
-        x, y = car.front_bumper_pos
-        distances.append(self.__get_distance_to_boundary(x, y))
-
-    return distances
+    return distances # A list of eight integers.
 
 
 def __get_distance_to_boundary(self, x, y):
@@ -20,7 +18,7 @@ def __get_distance_to_boundary(self, x, y):
         distance = 0
 
         # Move in the current direction until reaching the track boundary
-        while self.track(x, y) != 1:  # Assuming 1 represents the track boundary
+        while self.track_mat[x, y] != 0:  # Assuming 0 represents the grass
             x += dx
             y += dy
             distance += 1
