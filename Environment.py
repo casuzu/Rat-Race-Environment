@@ -10,9 +10,36 @@ def TRACK_COL():
     return 2000
 
 def RACE_TRACK(filename):
-    listnum = np.genfromtxt(filename, delimiter=',')
-    reshaped_listnum = listnum.reshape(TRACK_ROW(), TRACK_COL())
-    return reshaped_listnum
+    #Edited by Dan.
+    image = Image.open(filename)
+    data = np.asarray(image)
+    track = np.zeros(TRACK_COL()*TRACK_ROW()).reshape(TRACK_ROW(), TRACK_COL())
+
+    for x in range(TRACK_COL()):
+        for y in range(TRACK_ROW()):
+            total = sum(data[y, x])
+            r, g, b = data[y, x]
+            if total < 90:
+                #Asphalt represented by 1
+                track[y, x] = 1
+            elif total > 90 and total < 350 and (r>(g+b)):
+                #Gates represented by 2
+                track[y, x] = 2
+            elif total > 250 and total < 800:
+                #Grass reprsented by 0
+                track[y, x] = 0  
+
+    #Fix a few single cells that where not asphalt when all four sides were.
+    for x in range(1, TRACK_COL()-1):
+        for y in range(1, TRACK_ROW()-1):
+            if track[y+1, x]==1 and track[y, x+1]==1 and track[y-1, x]==1 and track[y, x-1]==1:
+                track[y, x] = 1
+    return track    
+    ##### OLD CODE #####
+    #listnum = np.genfromtxt(filename, delimiter=',')
+    #reshaped_listnum = listnum.reshape(TRACK_ROW(), TRACK_COL())
+    #return reshaped_listnum
+    ##### OLD CODE #####
 
 def track_displayer(list_data):
     #list1 = np.array([[1000, 300]])
