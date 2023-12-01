@@ -5,10 +5,10 @@ from Car import CarObj
 from PIL import Image
 
 def TRACK_ROW():
-    return 20
+    return 720
 
 def TRACK_COL():
-    return 20
+    return 1200
 
 def RACE_TRACK(filename):
     # Edited by Dan.
